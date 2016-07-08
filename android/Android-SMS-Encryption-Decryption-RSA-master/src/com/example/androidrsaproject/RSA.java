@@ -25,13 +25,16 @@ public class RSA {
 	/** Create an instance that can both encrypt and decrypt. */
 	public RSA(int bits) {
 		bitlen = bits;
-		SecureRandom r = new SecureRandom();
+		SecureRandom r = new SecureRandom();//强随机数
 		BigInteger p = new BigInteger(bitlen / 2, 100, r);
 		BigInteger q = new BigInteger(bitlen / 2, 100, r);
+		//n是两个大质数p、q的积，n的二进制表示时所占用的位数，就是所谓的密钥长度。
 		n = p.multiply(q);
+		//m=(p-1)*(q-1)
 		BigInteger m = (p.subtract(BigInteger.ONE)).multiply(q
 				.subtract(BigInteger.ONE));
-		e = new BigInteger("3");
+		
+		e = new BigInteger("3");//3转成大整数
 		while (m.gcd(e).intValue() > 1) {
 			e = e.add(new BigInteger("2"));
 		}
